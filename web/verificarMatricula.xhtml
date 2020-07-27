@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <h:head>
+        <title>
+            Verificacion matricula
+        </title>
+    </h:head>
+    <h:body>
+        <h:form id="form" >
+
+            <p:commandButton style="float: right" action="#{logInBean.goToIndex()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.goBack']}"/>
+
+
+            <p:commandButton style="float: right" action="#{areaBean.changeLanguage()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.changeLanguage']}"/>
+            <br/>
+            <p:outputLabel  value="#{eti['title.watchEmployees']}"/>
+            <table>
+
+
+                <tr>
+                    <td>
+                        <p:outputLabel value="#{eti['title.course']}"/>
+                    </td>
+                    <td>
+                        <p:selectOneMenu id="cbCursos" value="#{matriculaBean.matricula.idCurso}">
+                            <f:selectItems value="#{cursoBean.fillCourses()}"/>
+                        </p:selectOneMenu>
+                        <p:message for="cbCursos"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="#{eti['title.employee']}"/>
+                    </td>
+                    <td>
+                        <p:selectOneMenu id="cbEmpleados" value="#{matriculaBean.matricula.cedula}">
+                            <f:selectItems value="#{empleadoBean.fillEmployees()}"/>
+                        </p:selectOneMenu>
+                        <p:message for="cbEmpleados"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.note']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtNota" 
+                                     readonly="#{matriculaBean.modificando == false}"
+                                     value="#{matriculaBean.matricula.nota}"/>
+                        <p:message for="txtNota"/>
+                    </td>
+                </tr>
+
+            </table>
+
+            <p:commandButton id="btnInsert" value="#{eti['button.verify']}"
+                             rendered="#{matriculaBean.modificando == false}"
+                             action="#{matriculaBean.verifyEnrroll()}" 
+                             ajax="false"/>
+            <p:commandButton id="btnUpdate" value="#{eti['button.update']}"
+                             rendered="#{matriculaBean.modificando == true}"
+                             action="#{matriculaBean.update()}" 
+                             ajax="false"/>
+            <p:commandButton id="btnClean" value="#{eti['button.clean']}"
+                             action="#{matriculaBean.clean()}" 
+                             ajax="false"/>
+
+            <p:messages globalOnly="true"/>
+
+
+
+
+        </h:form>
+
+    </h:body>
+</html>
+

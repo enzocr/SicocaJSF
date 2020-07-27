@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>
+            Mant Courses
+        </title>
+    </h:head>
+    <h:body>
+        <h:form id="form" >
+
+            <p:commandButton style="float: right" action="#{logInBean.goToIndex()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.goBack']}"/>
+            <p:commandButton style="float: right" action="#{areaBean.changeLanguage()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.changeLanguage']}"/>
+            <br/>
+            <p:outputLabel  value="#{eti['title.mantCourse']}"/>
+            <table>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.idCourse']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtIdCurso" 
+                                     readonly="#{cursoBean.modificando == true}"
+                                     value="#{cursoBean.curso.idCurso}"/>
+                        <p:message for="txtIdCurso"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.name']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtNombre" value="#{cursoBean.curso.nombre}"/>
+                        <p:message for="txtNombre"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.hours']}"/>
+                    </td>
+                    <td>
+                        <p:spinner id="txtHoras" value="#{cursoBean.curso.horasDuracion}"
+                                   min="1" max="10"/>
+                        <p:message for="txtHoras"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.initialDate']}"/>
+                    </td>
+                    <td>
+                        <p:calendar id="txtFechaInicio" value="#{cursoBean.curso.fechaInicio}"/>
+                        <p:message for="txtFechaInicio"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="#{eti['header.finalDate']}"/>
+                    </td>
+                    <td>
+                        <p:calendar id="txtFechaFinal" value="#{cursoBean.curso.fechaFinalizacion}"/>
+                        <p:message for="txtFechaFinal"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="#{eti['header.price']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtPrecio" value="#{cursoBean.curso.precio}"/>
+                        <p:message for="txtPrecio"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel value="#{eti['title.instructors']}"/>
+                    </td>
+                    <td>
+                        <p:selectOneMenu id="cbInstructors" value="#{cursoBean.curso.idInstructor}">
+                            <f:selectItems value="#{instructorBean.fillInstructors()}"/>
+                        </p:selectOneMenu>
+                        <p:message for="cbInstructors"/>
+                    </td>
+                </tr>
+
+            </table>
+
+            <p:commandButton id="btnInsert" value="#{eti['button.insert']}"
+                             rendered="#{cursoBean.modificando == false}"
+                             action="#{cursoBean.insert()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnUpdate" value="#{eti['button.update']}"
+                             rendered="#{cursoBean.modificando == true}"
+                             action="#{cursoBean.update()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnGetById" value="#{eti['button.getById']}"
+                             action="#{cursoBean.getById()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnGetByName" value="#{eti['button.getByName']}"
+                             action="#{cursoBean.getByName()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnClean" value="#{eti['button.clean']}"
+                             action="#{cursoBean.clean()}" 
+                             ajax="false"/>
+
+            <p:messages globalOnly="true"/>
+
+            <p:dataTable id="table" value="#{cursoBean.lista}" style="width: 70%;"
+                         var="obj" paginator="true" rows="8">
+                <p:column headerText="#{eti['header.idCourse']}">
+                    <p:outputLabel value="#{obj.idCurso}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.name']}">
+                    <p:outputLabel value="#{obj.nombre}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.hours']}">
+                    <p:outputLabel value="#{obj.horasDuracion}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.initialDate']}">
+                    <p:outputLabel value="#{obj.fechaInicio}">
+                        <f:convertDateTime pattern="dd/MM/yy"/>
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="#{eti['header.finalDate']}">
+                    <p:outputLabel value="#{obj.fechaFinalizacion}">
+                        <f:convertDateTime pattern="dd/MM/YY"/>
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="#{eti['header.price']}">
+                    <p:outputLabel value="#{obj.precio}"/>
+                </p:column>
+                <p:column headerText="#{eti['title.instructor']}">
+                    <p:outputLabel value="#{cursoBean.fillCollumnWithIntructorsCourse(obj.idInstructor)}"/>
+                </p:column>
+                <p:column>
+                    <h:commandLink action="#{cursoBean.select(obj)}">
+                        <h:graphicImage  value="../img/modificar.png"/>
+                    </h:commandLink>
+                    <h:commandLink onclick="return confirm('Desea eliminar el curso #{obj.nombre}');"
+                                   action="#{cursoBean.delete(obj)}">
+                        <h:graphicImage  value="../img/eliminar.gif"/>
+                    </h:commandLink>
+                </p:column>
+            </p:dataTable>
+
+
+        </h:form>
+
+    </h:body>
+</html>
+

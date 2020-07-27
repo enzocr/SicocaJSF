@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            Mant Inst
+        </title>
+    </h:head>
+    <h:body>
+        <h:form id="form" >
+
+            <p:commandButton style="float: right" action="#{logInBean.goToIndex()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.goBack']}"/>
+            <p:commandButton style="float: right" action="#{areaBean.changeLanguage()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.changeLanguage']}"/>
+            <br/>
+            <p:outputLabel  value="#{eti['title.mantInstructor']}"/>
+            <table>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.idInstructor']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtIdInstructor" 
+                                     readonly="#{instructorBean.modificando == true}"
+                                     value="#{instructorBean.instructor.idInstructor}"/>
+                        <p:message for="txtIdInstructor"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.name']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtNombre" value="#{instructorBean.instructor.nombre}"/>
+                        <p:message for="txtNombre"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.grade']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtGrado" value="#{instructorBean.instructor.gradoAcademico}"/>
+                        <p:message for="txtGrado"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.experience']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtAnnosExperiencia" value="#{instructorBean.instructor.annosExperiencia}"/>
+                        <p:message for="txtAnnosExperiencia"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.phone']}"/>
+                    </td>
+                    <td>
+                        <p:inputText  id="txtTelefono" value="#{instructorBean.instructor.telefono}"/>
+                        <p:message for="txtTelefono"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.email']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtCorreo" value="#{instructorBean.instructor.correo}"/>
+                        <p:message for="txtCorreo"/>
+                    </td>
+                </tr>
+
+            </table>
+
+            <p:commandButton id="btnInsert" value="#{eti['button.insert']}"
+                             rendered="#{instructorBean.modificando == false}"
+                             action="#{instructorBean.insert()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnUpdate" value="#{eti['button.update']}"
+                             rendered="#{instructorBean.modificando == true}"
+                             action="#{instructorBean.update()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnGetById" value="#{eti['button.getById']}"
+                             action="#{instructorBean.getById()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnGetByName" value="#{eti['button.getByName']}"
+                             action="#{instructorBean.getByName()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnClean" value="#{eti['button.clean']}"
+                             action="#{instructorBean.clean()}" 
+                             ajax="false"/>
+
+            <p:messages globalOnly="true"/>
+
+            <p:dataTable id="table" value="#{instructorBean.lista}" style="width: 70%;"
+                         var="obj" paginator="true" rows="8">
+                <p:column headerText="#{eti['header.idInstructor']}">
+                    <p:outputLabel value="#{obj.idInstructor}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.name']}">
+                    <p:outputLabel value="#{obj.nombre}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.grade']}">
+                    <p:outputLabel value="#{obj.gradoAcademico}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.experience']}">
+                    <p:outputLabel value="#{obj.annosExperiencia}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.phone']}">
+                    <p:outputLabel value="#{obj.telefono}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.email']}">
+                    <p:outputLabel value="#{obj.correo}"/>
+                </p:column>
+                <p:column>
+                    <h:commandLink action="#{instructorBean.select(obj)}">
+                        <h:graphicImage  value="../img/modificar.png"/>
+                    </h:commandLink>
+                    <h:commandLink onclick="return confirm('Desea eliminar al instructor #{obj.nombre}');"
+                                   action="#{instructorBean.delete(obj)}">
+                        <h:graphicImage  value="../img/eliminar.gif"/>
+                    </h:commandLink>
+                </p:column>
+            </p:dataTable>
+
+
+        </h:form>
+
+    </h:body>
+</html>
+

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <application>
+        <locale-config>
+            <default-locale>es</default-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>cr.ac.una.icai.sicoca.propiedades.etiquetas</base-name>
+            <var>eti</var>
+        </resource-bundle>
+        <message-bundle>
+            cr.ac.una.icai.sicoca.propiedades.etiquetas
+        </message-bundle>
+    </application>  
+
+    <managed-bean>
+        <managed-bean-name>areaBean</managed-bean-name>
+        <managed-bean-class>cr.ac.una.icai.sicoca.beans.AreaBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>cursoBean</managed-bean-name>
+        <managed-bean-class>cr.ac.una.icai.sicoca.beans.CursoBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>instructorBean</managed-bean-name>
+        <managed-bean-class>cr.ac.una.icai.sicoca.beans.InstructorBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>empleadoBean</managed-bean-name>
+        <managed-bean-class>cr.ac.una.icai.sicoca.beans.EmpleadoBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>logInBean</managed-bean-name>
+        <managed-bean-class>cr.ac.una.icai.sicoca.beans.LogInBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>matriculaBean</managed-bean-name>
+        <managed-bean-class>cr.ac.una.icai.sicoca.beans.MatriculaBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+</faces-config>

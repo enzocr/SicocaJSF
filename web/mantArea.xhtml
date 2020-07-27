@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>
+            Area Mant
+        </title>
+    </h:head>
+    <h:body>
+        <h:form id="form" >
+
+            <p:commandButton style="float: right" action="#{logInBean.goToIndex()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.goBack']}"/>
+            <p:commandButton style="float: right" action="#{areaBean.changeLanguage()}"
+                             ajax="false" immediate="true"
+                             value="#{eti['button.changeLanguage']}"/>
+            <br/>
+            <p:outputLabel  value="#{eti['title.mantArea']}"/>
+            <table>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.idArea']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtIdArea" 
+                                     readonly="#{areaBean.modificando == true}"
+                                     value="#{areaBean.area.idArea}"/>
+                        <p:message for="txtIdArea"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.name']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtNombre" value="#{areaBean.area.nombre}"/>
+                        <p:message for="txtNombre"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:outputLabel  value="#{eti['header.location']}"/>
+                    </td>
+                    <td>
+                        <p:inputText id="txtUbicacion" value="#{areaBean.area.ubicacion}"/>
+                        <p:message for="txtUbicacion"/>
+                    </td>
+                </tr>
+            </table>
+
+            <p:commandButton id="btnInsert" value="#{eti['button.insert']}"
+                             rendered="#{areaBean.modificando == false}"
+                             action="#{areaBean.insert()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnUpdate" value="#{eti['button.update']}"
+                             rendered="#{areaBean.modificando == true}"
+                             action="#{areaBean.update()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnGetById" value="#{eti['button.getById']}"
+                             action="#{areaBean.getById()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnGetByName" value="#{eti['button.getByName']}"
+                             action="#{areaBean.getByName()}" 
+                             ajax="false"/>
+
+            <p:commandButton id="btnClean" value="#{eti['button.clean']}"
+                             action="#{areaBean.clean()}" 
+                             ajax="false"/>
+
+            <p:messages globalOnly="true"/>
+
+            <p:dataTable id="table" value="#{areaBean.lista}" style="width: 70%;"
+                         var="obj" paginator="true" rows="5">
+                <p:column headerText="#{eti['header.idArea']}">
+                    <p:outputLabel value="#{obj.idArea}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.name']}">
+                    <p:outputLabel value="#{obj.nombre}"/>
+                </p:column>
+                <p:column headerText="#{eti['header.location']}">
+                    <p:outputLabel value="#{obj.ubicacion}"/>
+                </p:column>
+                <p:column>
+                    <h:commandLink action="#{areaBean.select(obj)}">
+                        <h:graphicImage  value="../img/modificar.png"/>
+                    </h:commandLink>
+                    <h:commandLink onclick="return confirm('Desea eliminar el area seleccionada? #{obj.nombre}');"
+                                   action="#{areaBean.delete(obj)}">
+                        <h:graphicImage  value="../img/eliminar.gif"/>
+                    </h:commandLink>
+                </p:column>
+            </p:dataTable>
+
+
+        </h:form>
+
+    </h:body>
+</html>
+
